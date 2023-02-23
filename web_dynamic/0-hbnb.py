@@ -5,15 +5,16 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 from os import environ
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 import uuid
 
 app = Flask(__name__)
 # app.jinja_env.trim_blocks = True
 # app.jinja_env.lstrip_blocks = True
-
-cache_id = uuid.uuid4()
 
 
 @app.teardown_appcontext
@@ -37,6 +38,8 @@ def hbnb():
 
     places = storage.all(Place).values()
     places = sorted(places, key=lambda k: k.name)
+    # variable to add unique cache id as query string
+    cache_id = uuid.uuid4()
 
     return render_template('0-hbnb.html',
                            states=st_ct,

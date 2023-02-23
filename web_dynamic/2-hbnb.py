@@ -5,12 +5,11 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
-from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
 from os import environ
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 import uuid
 
 app = Flask(__name__)
@@ -24,7 +23,7 @@ def close_db(error):
     storage.close()
 
 
-@app.route('/1-hbnb', strict_slashes=False)
+@app.route('/2-hbnb', strict_slashes=False)
 def hbnb():
     """ HBNB is alive! """
     states = storage.all(State).values()
@@ -41,6 +40,7 @@ def hbnb():
     places = sorted(places, key=lambda k: k.name)
     # variable to add unique cache id as query string
     cache_id = uuid.uuid4()
+
     return render_template('1-hbnb.html',
                            states=st_ct,
                            amenities=amenities,
